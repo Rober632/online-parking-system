@@ -1,0 +1,88 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <h1 class="text-center mb-4">Parking Management</h1>
+  <form method="post" action="/add" #addParkingForm="ngForm" (submit)="addParking(addParkingForm)">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="model.name" name="name" placeholder="Enter name" #name required style="margin-bottom: 10px;">
+    </div>
+    <div class="form-group">
+      <label for="floor">Floor</label>
+      <input type="number" class="form-control" id="floor" [(ngModel)]="model.floor" name="floor" placeholder="Enter floor" #floor required style="margin-bottom: 10px;">
+    </div>
+    <div class="form-group">
+      <label for="slots">Slots</label>
+      <input type="number" class="form-control" id="slots" [(ngModel)]="model.slot" name="slot" placeholder="Enter slots" #slots required style="margin-bottom: 10px;">
+    </div>
+    <div class="form-group">
+      <label for="price">Price rate</label>
+      <input type="number" class="form-control" id="price" [(ngModel)]="model.price" name="price" placeholder="Enter price" #price required style="margin-bottom: 10px;">
+    </div>
+    <div class="d-flex justify-content-center">
+      <button type="submit" class="btn btn-primary py-2 px-4">
+        <i class="bi bi-plus"></i> Add Parking
+      </button>
+    </div>
+  </form>
+  <div class="table-container" style="max-height: 300px; overflow-y: auto; margin-top: 20px;">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Floor</th>
+          <th>Slots</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let parking of this.parking">
+          <td>{{ parking.name }}</td>
+          <td>{{ parking.floors.length }}</td>
+          <td>{{ parking.floors[0].slots.length }}</td>
+          <td>
+            <button type="button" class="btn btn-danger" (click)="removeParking(parking._id)">
+              <i class="bi bi-trash"></i> Remove
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<style>
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .table-container {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 10px;
+  }
+
+  .table {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .table th,
+  .table td {
+    padding: 10px;
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+  }
+
+  .table th {
+    font-weight: 500;
+    background-color: #f8f9fa;
+  }
+
+  .table td:last-child {
+    text-align: right;
+  }
+
+  h1 {
+    margin-top: 20px;
+  }
+</style>

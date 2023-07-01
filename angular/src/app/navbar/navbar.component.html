@@ -1,0 +1,49 @@
+
+
+
+  <nav class="navbar navbar-expand-lg navbar-light "style="background-color: #e2e3e5;">
+    <div class="container">
+      <a class="navbar-brand" href="#">Park Square</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <button type="button" routerLink="/" class="btn px-1 me-2 mt-1 link-hover">
+              Home
+            </button>
+          </li>
+            <li *ngIf="!token" class="nav-item mt-1">
+              <button type="button" routerLink="/login" class="btn px-3 me-2 link-hover">
+                Login
+              </button>
+            </li>
+            <li *ngIf="!token" class="nav-item">
+              <button type="button" routerLink="/register"  class="btn btn-primary me-3">
+                Sign up
+              </button>
+            </li>
+            <li *ngIf="token" class="nav-item mt-1">
+              <button *ngIf="user.role === 'admin'" type="button"   class="btn px-1 me-2 link-hover" routerLink="/dashboard" routerLinkActive="active-link">
+                Dashboard
+              </button>
+              <button type="button"   class="btn px-1 me-2 link-hover" routerLink="/parking/reservation" routerLinkActive="active-link">
+                Reservation
+              </button>
+            </li>
+            <li *ngIf="token" class="nav-item mt-1">
+              <button type="button" (click)="handleLogout()"  class="btn me-2 link-hover">
+                Logout
+              </button>
+            </li>
+              <li *ngIf="token" class="nav-item">
+                <a *ngIf="user?.name" class="nav-link fs-5" href="#"><i class="bi bi-person-fill"></i></a>
+              </li>
+              <p class="text-center bg-transparent text-dark text-capitalize font-weight-bolder fs-5 mt-2 mb-0"> {{ user?.name }}</p>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+  

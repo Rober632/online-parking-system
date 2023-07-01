@@ -1,0 +1,89 @@
+
+<app-navbar></app-navbar>
+  <!-- Reservation Form -->
+  <div class="container my-5">
+    <h1 class="text-center mb-4">Reserve Your Parking Spot</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+          <div  class="card-body">
+            <p *ngIf="!reserve" class="card-text">Click the button below to reserve your parking spot:</p>
+            <!-- <form method="post" action="/parking/reservation" #reservationForm="ngForm" (ngSubmit)="handelReservation(reservationForm)">
+              <button *ngIf="!reserve" type="submit" class="btn btn-primary btn-lg" id="reserveBtn">Reserve Now</button>
+            </form> -->
+            <form *ngIf="!reserve" method="post" action="/parking/reservation" #reservationForm="ngForm"  (ngSubmit)="handelReservation(reservationForm)">
+              <div class="form-group">
+                <label for="name mx-2">Name :</label>
+                <select class="form-control w-50 my-2 p-2" name="name" id="name" [(ngModel)]="reservation.name"  #reservation.form="ngModel" required>
+                  <option value="">Select the name</option>
+                  <option *ngFor="let parking of parkings" value="{{parking.name}}">{{parking.name}}</option>
+                </select>
+              </div>
+              <button *ngIf="!reserve" type="submit" class="btn btn-primary btn-lg mt-3" id="reserveBtn">Reserve Now</button>
+            </form>
+            <div *ngIf="response && !OtpInput" class="mt-3">
+              <p class="alert alert-success">Your parking reservation has been confirmed. An OTP was sent to your email.</p>
+            </div>
+            <div *ngIf="response" class="mt-3">
+              <p class="alert alert-success">{{ response }}</p>
+            </div>
+            <div *ngIf="error && !reserve" class="mt-3">
+              <p class="alert alert-warning">{{ error }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- OTP Form -->
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div *ngIf="response && !OtpInput" class="card shadow-lg p-3 mb-5 bg-white rounded">
+          <div class="card-body">
+            <h2 class="text-center mb-5">Enter Your OTP</h2>
+            <form class="d-grid gap-2" method="post" action="/parking/reservation" #otpForm="ngForm" (ngSubmit)="handelOtp(otpForm)">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" [(ngModel)]="model.otp"  #otp="ngModel" id="otp" name="otp" placeholder="Enter OTP" required>
+                <label for="otp">OTP</label>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+            </form>
+            <div *ngIf="errorOtp" class="mt-3">
+              <p class="alert alert-warning text-center">{{ errorOtp }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div *ngIf="OtpInput" class="card shadow-lg p-3 mb-5 bg-white rounded">
+          <div class="card-body">
+            <h2 class="text-center mb-5" style="font-size: 2rem; font-weight: bold;">Parking Details</h2>
+            <div style="display: flex; align-items: center;">
+              <p style="font-size: 1.2rem; font-weight: bold; margin-right: 10px;">Check-in time:</p>
+              <span class="mb-3">{{ checkInTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+            </div>
+            <div style="display: flex; align-items: center;">
+              <p style="font-size: 1.2rem; font-weight: bold; margin-right: 10px;">Elapsed time:</p>
+              <span class="mb-3">{{ convertSecondsToMinutes(this.timeDiff) }}</span>
+            </div>
+            <div style="display: flex; align-items: center;">
+              <p style="font-size: 1.2rem; font-weight: bold; margin-right: 10px;">Total Price:</p>
+              <span class="mb-3">{{ this.totalPrice }}$</span>
+            </div>
+            <div style="display: flex; align-items: center;">
+              <p style="font-size: 1.2rem; font-weight: bold; margin-right: 10px;">Price:</p>
+              <span class="mb-3">{{ price }} per minute</span>
+            </div>
+            <button class="btn btn-primary btn-lg mt-3" style="font-size: 1.5rem; font-weight: bold;" (click)="handleCheckout($event)">Pay Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

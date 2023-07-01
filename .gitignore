@@ -1,0 +1,11 @@
+# Node.js
+node_modules/
+npm-debug.log
+
+# Angular
+dist/
+tmp/
+node_modules/
+
+# Other
+.DS_Store
